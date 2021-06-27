@@ -58,6 +58,7 @@ module.exports = function(api) {
         handle: product.handle,
         description: product.description,
         images: product.images.edges[0].node.src,
+        altText: product.images.edges[0].node.altText,
       });
     }
   });
