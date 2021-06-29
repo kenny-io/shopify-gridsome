@@ -38,9 +38,9 @@
                 <input
                   type="radio"
                   :id="`${variant.node.id}`"
-                  :value="variant.node"
+                  :value="variant.node.id"
                   name="radiobutton"
-                  v-model="cartItem.selectedProduct"
+                  v-model="selectedProduct"
                 />
                 <label :for="`${variant.node.id}`">
                   {{ variant.node.title }} -
@@ -65,11 +65,11 @@
             id="quantity"
             type="number"
             value="1"
-            v-model="cartItem.quantity"
+            v-model="quantity"
           />
           <br /><br />
           <button
-            @click.prevent="createCart"
+            @click.prevent="addToCart"
             style="
                   padding: 10px;
                   background: transparent;
@@ -127,32 +127,36 @@ export default {
       title: `Buy ${this.product.title}`,
     };
   },
+  data() {
+    return {
+      selectedProduct: "",
+      quantity: 1,
+      cartId: null,
+    };
+  },
   computed: {
     product() {
       return this.$page.product;
     },
   },
   mounted() {
-    // Set default selected item
-    this.cartItem.selectedProduct = this.product;
+    this.selectedProduct = this.product.variants[0].node.id;
   },
-  data() {
-    return {
-      cartItem: {
-        selectedProduct: "",
-        quantity: "",
-      },
-    };
-  },
+
   methods: {
-    async createCart() {
-      const cartResponse = await fetch("/.netlify/functions/create-cart", {
+    async addToCart() {
+      const addToCartResponse = await fetch("/.netlify/functions/add-to-cart", {
         method: "POST",
-        body: JSON.stringify(this.cartItem),
-      }).then((res) => res.json());
-      // .then((data) => console.log(data));
-      const cart = await cartResponse.cartCreate;
-      console.log(cart);
+        body: JSON.stringify({
+          cartId: localStorage.getItem("cartId"),
+          itemId: this.selectedProduct,
+          quantity: this.quantity,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => data);
+      localStorage.setItem("cartId", addToCartResponse.id);
+      localStorage.setItem("cart", JSON.stringify(addToCartResponse));
     },
   },
 };

@@ -24,7 +24,6 @@
           </li>
         </ul>
       </div>
-      <!-- <pre>{{ this.$page.products }}</pre> -->
     </main>
   </div>
 </template>

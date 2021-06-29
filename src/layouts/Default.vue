@@ -6,8 +6,9 @@
       </strong>
       <nav class="nav">
         <g-link class="nav__link" to="/">Home</g-link>
-        <g-link class="nav__link" to="/cart/">Cart</g-link>
-        <g-link class="nav__link" to="/checkout/">Checkout</g-link>
+        <g-link class="nav__link" to="/cart/">
+          Shopping Cart ({{ this.count || 0 }})
+        </g-link>
       </nav>
     </header>
     <slot />
@@ -22,22 +23,20 @@ query {
 }
 </static-query>
 
+<script>
+export default {
+  data() {
+    return {
+      count: "",
+    };
+  },
+  mounted() {
+    this.cart = JSON.parse(localStorage.getItem("cart"));
+    this.count = this.cart.lines.edges.length;
+  },
+};
+</script>
 <style>
-/* body {
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.5;
-} */
-
-/* .layout {
-  max-width: 760px;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
-} */
-
 .header {
   display: flex;
   justify-content: space-between;
