@@ -26,16 +26,57 @@
         padding: 0 10px;
         max-width: 500px;"
         >
-          <h4>{{ this.$page.product.title }}</h4>
-          <p style="margin: 20px 0;">{{ this.$page.product.description }}</p>
+          <h4>{{ product.title }}</h4>
+          <p style="margin: 20px 0;">{{ this.product.description }}</p>
+
+          <div v-if="this.product.variants.length > 1">
+            <form>
+              <div
+                v-for="variant in this.product.variants"
+                :key="variant.node.id"
+              >
+                <input
+                  type="radio"
+                  :id="`${variant.node.id}`"
+                  :value="variant.node"
+                  name="radiobutton"
+                  v-model="cartItem.selectedProduct"
+                />
+                <label :for="`${variant.node.id}`">
+                  {{ variant.node.title }} -
+                  {{ variant.node.priceV2.currencyCode }}
+                  {{ variant.node.priceV2.amount }}
+                  --- {{ variant.node.quantityAvailable }} in stock
+                </label>
+                <br />
+              </div>
+            </form>
+          </div>
+          <div v-else>
+            <p>
+              {{ this.product.variants[0].node.priceV2.currencyCode }}
+              {{ this.product.variants[0].node.priceV2.amount }}
+            </p>
+          </div>
+          <label for="quantity">Select quantity </label>
+          <input
+            style="margin-top: 10px"
+            name="Quantity"
+            id="quantity"
+            type="number"
+            value="1"
+            v-model="cartItem.quantity"
+          />
+          <br /><br />
           <button
+            @click.prevent="createCart"
             style="
-          padding: 10px;
-          background: transparent;
-          border-radius: 10px;
-          border: 2px solid #fff;
-          color: #fff;
-          font-size: 1em;"
+                  padding: 10px;
+                  background: transparent;
+                  border-radius: 10px;
+                  border: 2px solid #fff;
+                  color: #fff;
+                  font-size: 1em;"
           >
             Add to Cart
           </button>
@@ -52,17 +93,67 @@ query Products($id: ID!) {
     title
     images
     description
-    handle
+    handle,
+    variants{
+      node{
+        id
+        title
+        quantityAvailable
+        priceV2{
+          amount
+          currencyCode
+        }
+      }
+    },
+    priceRange{
+      maxVariantPrice{
+        amount
+        currencyCode
+      }
+      minVariantPrice{
+        currencyCode
+        amount
+      }
+    }
   }
 }
 </page-query>
 
 <script>
+const fetch = require("node-fetch");
 export default {
   metaInfo() {
     return {
-      title: `Buy ${this.$page.product.title}`,
+      title: `Buy ${this.product.title}`,
     };
+  },
+  computed: {
+    product() {
+      return this.$page.product;
+    },
+  },
+  mounted() {
+    // Set default selected item
+    this.cartItem.selectedProduct = this.product;
+  },
+  data() {
+    return {
+      cartItem: {
+        selectedProduct: "",
+        quantity: "",
+      },
+    };
+  },
+  methods: {
+    async createCart() {
+      const cartResponse = await fetch("/.netlify/functions/create-cart", {
+        method: "POST",
+        body: JSON.stringify(this.cartItem),
+      }).then((res) => res.json());
+      // .then((data) => console.log(data));
+      const cart = await cartResponse.cartCreate;
+      console.log(cart);
+    },
   },
 };
 </script>

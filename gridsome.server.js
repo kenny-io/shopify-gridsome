@@ -10,30 +10,53 @@ const shopUrl = "https://netlify-demo.myshopify.com";
 const storefront_access_token = "b98313b8d60c1d61649070cc78cc41da";
 
 module.exports = function(api) {
-  // whitelist vuetify for webpack code here
   api.loadSource(async (actions) => {
     const query = `{
-  products(sortKey: TITLE, first: 100) {
-    edges {
-      node {
-        id
-        handle
-        description
-        title
-        images(first: 1) {
-          edges {
-            node {
-              src
-              altText
+      products(sortKey: TITLE, first: 100) {
+        edges {
+          node {
+            id
+            handle
+            description
+            title
+            totalInventory
+            variants(first: 5) {
+              edges {
+                node {
+                  id
+                  title
+                  quantityAvailable
+                  priceV2 {
+                    amount
+                    currencyCode
+                  }
+                }
+              }
+            }
+            priceRange {
+              maxVariantPrice {
+                amount
+                currencyCode
+              }
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
+            images(first: 1) {
+              edges {
+                node {
+                  src
+                  altText
+                }
+              }
             }
           }
         }
       }
-    }
-  }
-}`;
+    }`;
 
-    const products = await fetch(shopUrl + `/api/graphql`, {
+    const response = await fetch(shopUrl + `/api/graphql`, {
       method: "post",
       headers: {
         "Content-Type": "application/graphql",
@@ -46,8 +69,8 @@ module.exports = function(api) {
         return response.data.products.edges;
       });
 
-    console.log(products);
-    const productData = products.map((prod) => prod.node);
+    console.log(response);
+    const productData = response.map((prod) => prod.node);
     const collection = actions.addCollection({
       typeName: "Product",
     });
@@ -59,6 +82,8 @@ module.exports = function(api) {
         description: product.description,
         images: product.images.edges[0].node.src,
         altText: product.images.edges[0].node.altText,
+        priceRange: product.priceRange,
+        variants: product.variants.edges,
       });
     }
   });

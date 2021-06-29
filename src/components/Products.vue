@@ -10,7 +10,7 @@
             class="product"
             :key="product.node.id"
           >
-            <a :href="`/products/${product.node.id}`">
+            <a :href="`/products/${product.node.handle}`">
               <div class="frame">
                 <g-image
                   class="prodimg"
@@ -24,6 +24,7 @@
           </li>
         </ul>
       </div>
+      <!-- <pre>{{ this.$page.products }}</pre> -->
     </main>
   </div>
 </template>

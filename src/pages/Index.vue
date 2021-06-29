@@ -15,7 +15,26 @@ query{
         title,
         description,
         handle,
-        images
+        images,
+        priceRange{
+          maxVariantPrice{
+            amount
+          }
+          minVariantPrice{
+            currencyCode
+          }
+        },
+        variants{
+          node{
+            id 
+            title
+            quantityAvailable
+            priceV2{
+              amount
+              currencyCode
+            }
+          }
+        }
       }
     }
   }

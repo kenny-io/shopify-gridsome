@@ -8,6 +8,6 @@ module.exports = {
   siteName: "Shoperoni",
   plugins: [],
   templates: {
-    Product: "/products/:id",
+    Product: "/products/:handle",
   },
 };
