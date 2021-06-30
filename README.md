@@ -1,14 +1,31 @@
-# Default starter for Gridsome
+# Gridsome Shopify Storefront Starter
 
-This is the project you get when you run `gridsome create new-project`.
+This template provides a bare minimun starter for the new Shopify Storefront API built with [Gridsome](https://gridsome.org)
+
+### Available features:
+
+- Get products - Fetch and products from your Storefront API.
+- Product details page - Show a detailed product page for each listed product.
+- Variants - Show product variants and allow users to select them.
+- Cart - Add items to the cart and see a summary in the cart page.
+- Remove items from cart
+
+## Getting started
 
 ### 1. Install Gridsome CLI tool if you don't have
 
 `npm install --global @gridsome/cli`
 
-### 2. Create a Gridsome project
+### 2. Clone the project
 
-1. `gridsome create my-gridsome-site` to install default starter
-2. `cd my-gridsome-site` to open the folder
-3. `gridsome develop` to start a local dev server at `http://localhost:8080`
-4. Happy coding 🎉🙌
+`git clone https://github.com/kenny-io/shopify-gridsome`
+
+OR
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/kenny-io/shopify-gridsome)
+
+And that's it! Happy coding!.
+
+#### Preview
+
+This project is hosted on [Netlify](https://app.netlify.com/) and available her for preview https://shopify-gridsom.netlify.app/
