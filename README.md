@@ -12,7 +12,7 @@ This template provides a bare minimun starter for the new Shopify Storefront API
 
 ## Getting started
 
-### 1. Install Gridsome CLI tool if you don't have
+### 1. Install the Gridsome CLI tool if you don't have it
 
 `npm install --global @gridsome/cli`
 
@@ -22,10 +22,12 @@ This template provides a bare minimun starter for the new Shopify Storefront API
 
 OR
 
+Just ...
+
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/kenny-io/shopify-gridsome)
 
-And that's it! Happy coding!.
+And that's it!
 
-#### Preview
+### Preview
 
 This project is hosted on [Netlify](https://app.netlify.com/) and available her for preview https://shopify-gridsom.netlify.app/
