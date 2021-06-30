@@ -45,7 +45,7 @@ query{
 import Products from "@/components/Products.vue";
 export default {
   metaInfo: {
-    title: "Cheese and meat shop",
+    title: "Shoperoni",
   },
   components: {
     Products,
