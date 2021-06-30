@@ -44,10 +44,6 @@
         </div>
         <div v-else>
           <p>Your cart is empty, fill it up!</p>
-          <p>
-            If you've added an item and don't see it yet! refresh the page!
-            (localStorage) 🤦🏽‍♂️
-          </p>
         </div>
         <br />
         <g-link to="/">Back Home</g-link>
@@ -102,6 +98,7 @@ export default {
       );
       this.cart.lines.edges = newCartItems;
       localStorage.setItem("cart", JSON.stringify(this.cart));
+      window.location.reload(true);
     },
   },
 };

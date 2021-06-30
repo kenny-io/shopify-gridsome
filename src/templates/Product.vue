@@ -157,6 +157,7 @@ export default {
         .then((data) => data);
       localStorage.setItem("cartId", addToCartResponse.id);
       localStorage.setItem("cart", JSON.stringify(addToCartResponse));
+      window.location.reload(true);
     },
   },
 };
