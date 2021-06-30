@@ -92,15 +92,16 @@ export default {
           cartId: this.cart.id,
           lineId,
         }),
-      });
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
 
       // remove item from localStorage
-      let newCart = this.cart.lines.edges.filter(
+      let newCartItems = this.cart.lines.edges.filter(
         (item) => item.node.id !== lineId
       );
-      localStorage.setItem("cart", JSON.stringify(newCart));
-      console.log(newCart);
-      this.cart = localStorage.getItem("cart");
+      this.cart.lines.edges = newCartItems;
+      localStorage.setItem("cart", JSON.stringify(this.cart));
     },
   },
 };
