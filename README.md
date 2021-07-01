@@ -30,4 +30,4 @@ And that's it!
 
 ### Preview
 
-This project is hosted on [Netlify](https://app.netlify.com/) and available her for preview https://shopify-gridsom.netlify.app/
+This project is hosted on [Netlify](https://app.netlify.com/) and available here for preview https://shopify-gridsom.netlify.app/
