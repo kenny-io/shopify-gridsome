@@ -68,6 +68,7 @@ export default {
     };
   },
   mounted() {
+    // get all the cart details we need from localStorage
     this.cart = JSON.parse(localStorage.getItem("cart"));
     this.cartItems = this.cart.lines.edges;
     this.subtotal = this.cart.estimatedCost.subtotalAmount.amount;
@@ -97,6 +98,7 @@ export default {
         (item) => item.node.id !== lineId
       );
       this.cart.lines.edges = newCartItems;
+      // update cart in localStorage
       localStorage.setItem("cart", JSON.stringify(this.cart));
       window.location.reload(true);
     },

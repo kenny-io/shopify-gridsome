@@ -1,33 +1,14 @@
 <template>
   <Layout>
     <template>
-      <div
-        style="
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;"
-      >
-        <div
-          style="
-        margin-bottom: 20px;
-        padding: 0 10px;"
-        >
-          <g-image
-            style="
-            max-width: min(100%, 500px);
-            border-radius: 10px;"
-            alt="product image"
-            :src="`${this.$page.product.images}`"
-          >
+      <div class="product-page">
+        <div class="product-img">
+          <g-image alt="product image" :src="`${this.$page.product.images}`">
           </g-image>
         </div>
-        <div
-          style="
-        padding: 0 10px;
-        max-width: 500px;"
-        >
+        <div class="product-copy">
           <h4>{{ product.title }}</h4>
-          <p style="margin: 20px 0;">{{ this.product.description }}</p>
+          <p>{{ this.product.description }}</p>
 
           <div v-if="this.product.variants.length > 1">
             <form>
@@ -60,7 +41,6 @@
           </div>
           <label for="quantity">Select quantity </label>
           <input
-            style="margin-top: 10px"
             name="Quantity"
             id="quantity"
             type="number"
@@ -68,16 +48,7 @@
             v-model="quantity"
           />
           <br /><br />
-          <button
-            @click.prevent="addToCart"
-            style="
-                  padding: 10px;
-                  background: transparent;
-                  border-radius: 10px;
-                  border: 2px solid #fff;
-                  color: #fff;
-                  font-size: 1em;"
-          >
+          <button @click.prevent="addToCart">
             Add to Cart
           </button>
         </div>
@@ -155,6 +126,8 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => data);
+
+      // save cart to localStorage
       localStorage.setItem("cartId", addToCartResponse.id);
       localStorage.setItem("cart", JSON.stringify(addToCartResponse));
       window.location.reload(true);
