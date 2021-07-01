@@ -1,4 +1,4 @@
-# Gridsome Shopify Storefront Starter
+# Gridsome Shopify Storefront Starter template
 
 This template provides a bare minimun starter for the new Shopify Storefront API built with [Gridsome](https://gridsome.org)
 
