@@ -1,40 +1,17 @@
 <template>
   <Layout>
     <template>
-      <div
-        style="
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;"
-      >
-        <div
-          style="
-        margin-bottom: 20px;
-        padding: 0 10px;"
-        >
-          <g-image
-            style="
-            max-width: min(100%, 500px);
-            border-radius: 10px;"
-            alt="product image"
-            :src="`${this.$page.product.images}`"
-          >
-          </g-image>
+      <div class="product-page">
+        <div class="product-img">
+          <g-image alt="product image" :src="`${product.images}`"> </g-image>
         </div>
-        <div
-          style="
-        padding: 0 10px;
-        max-width: 500px;"
-        >
+        <div class="product-copy">
           <h4>{{ product.title }}</h4>
-          <p style="margin: 20px 0;">{{ this.product.description }}</p>
+          <p>{{ product.description }}</p>
 
-          <div v-if="this.product.variants.length > 1">
+          <div v-if="product.variants.length > 1">
             <form>
-              <div
-                v-for="variant in this.product.variants"
-                :key="variant.node.id"
-              >
+              <div v-for="variant in product.variants" :key="variant.node.id">
                 <input
                   type="radio"
                   :id="`${variant.node.id}`"
@@ -44,40 +21,39 @@
                 />
                 <label :for="`${variant.node.id}`">
                   {{ variant.node.title }} -
-                  {{ variant.node.priceV2.currencyCode }}
-                  {{ variant.node.priceV2.amount }}
-                  --- {{ variant.node.quantityAvailable }} in stock
+                  {{ price(variant.node.priceV2) }}
+                  ( Only {{ variant.node.quantityAvailable }} left )
                 </label>
-                <br />
               </div>
             </form>
+            <br />
           </div>
+
           <div v-else>
             <p>
-              {{ this.product.variants[0].node.priceV2.currencyCode }}
-              {{ this.product.variants[0].node.priceV2.amount }}
+              {{ price(product.variants[0].node.priceV2) }}
+              <span v-if="product.variants[0].node.quantityAvailable > 10">
+                (10+ left)
+              </span>
+              <span v-else-if="product.variants[0].node.quantityAvailable > 0">
+                (Only {{ product.variants[0].node.quantityAvailable }} left)
+              </span>
+              <span v-else> (Bummer. It's sold out!) </span>
             </p>
           </div>
+
           <label for="quantity">Select quantity </label>
           <input
-            style="margin-top: 10px"
             name="Quantity"
             id="quantity"
             type="number"
             value="1"
+            min="1"
+            :max="product.variants[0].node.quantityAvailable"
             v-model="quantity"
           />
           <br /><br />
-          <button
-            @click.prevent="addToCart"
-            style="
-                  padding: 10px;
-                  background: transparent;
-                  border-radius: 10px;
-                  border: 2px solid #fff;
-                  color: #fff;
-                  font-size: 1em;"
-          >
+          <button @click.prevent="addToCart">
             Add to Cart
           </button>
         </div>
@@ -155,9 +131,15 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => data);
+
+      // save cart to localStorage
       localStorage.setItem("cartId", addToCartResponse.id);
       localStorage.setItem("cart", JSON.stringify(addToCartResponse));
       window.location.reload(true);
+    },
+    price(itemPrice) {
+      const amount = Number(itemPrice.amount).toFixed(2);
+      return amount + " " + itemPrice.currencyCode;
     },
   },
 };
