@@ -83,23 +83,23 @@ export default {
     },
     async removeItem(lineId) {
       // remove item from Shopify cart
-      await fetch("/.netlify/functions/remove-from-cart", {
-        method: "POST",
-        body: JSON.stringify({
-          cartId: this.cart.id,
-          lineId,
-        }),
-      })
+      const removeItemFromCart = await fetch(
+        "/.netlify/functions/remove-from-cart",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            cartId: this.cart.id,
+            lineId,
+          }),
+        }
+      )
         .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then((data) => data);
 
-      // remove item from localStorage
-      let newCartItems = this.cart.lines.edges.filter(
-        (item) => item.node.id !== lineId
-      );
-      this.cart.lines.edges = newCartItems;
-      // update cart in localStorage
-      localStorage.setItem("cart", JSON.stringify(this.cart));
+      // update localStorage;
+
+      localStorage.setItem("cartId", removeItemFromCart.id);
+      localStorage.setItem("cart", JSON.stringify(removeItemFromCart));
       window.location.reload(true);
     },
   },
