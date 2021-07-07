@@ -29,10 +29,7 @@ query{
             id 
             title
             quantityAvailable
-            priceV2{
-              amount
-              currencyCode
-            }
+            price
           }
         }
       }

@@ -38,7 +38,7 @@
           <br />
           <ul>
             <li>Subtotal: {{ currency }} {{ subtotal }}</li>
-            <li>Tax: {{ tax }}</li>
+            <li>Tax: {{ currency }} {{ tax }}</li>
             <li>Total: {{ currency }} {{ total }}</li>
           </ul>
         </div>
@@ -74,7 +74,7 @@ export default {
     this.subtotal = this.cart.estimatedCost.subtotalAmount.amount;
     this.currency = this.cart.estimatedCost.subtotalAmount.currencyCode;
     this.total = this.cart.estimatedCost.totalAmount.amount;
-    this.tax = this.cart.estimatedCost.totalTaxAmount || 0;
+    this.tax = this.cart.estimatedCost.totalTaxAmount.amount || 0;
   },
   methods: {
     itemTotal(price, quantity) {

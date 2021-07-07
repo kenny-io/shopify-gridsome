@@ -6,8 +6,8 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 const fetch = require("node-fetch");
-const shopUrl = "https://netlify-demo.myshopify.com";
-const storefront_access_token = "b98313b8d60c1d61649070cc78cc41da";
+// const shopUrl = "https://netlify-demo.myshopify.com";
+// const storefront_access_token = "b98313b8d60c1d61649070cc78cc41da";
 
 module.exports = function(api) {
   api.loadSource(async (actions) => {
@@ -26,10 +26,7 @@ module.exports = function(api) {
                   id
                   title
                   quantityAvailable
-                  priceV2 {
-                    amount
-                    currencyCode
-                  }
+                  price
                 }
               }
             }
@@ -56,20 +53,22 @@ module.exports = function(api) {
       }
     }`;
 
-    const response = await fetch(shopUrl + `/api/graphql`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/graphql",
-        "X-Shopify-Storefront-Access-Token": storefront_access_token,
-      },
-      body: query,
-    })
+    const response = await fetch(
+      process.env.SHOPIFY_STORE_URL + `/api/graphql`,
+      {
+        method: "post",
+        headers: {
+          "Content-Type": "application/graphql",
+          "X-Shopify-Storefront-Access-Token":
+            process.env.SHOPIFY_STOREFRONT_API_TOKEN,
+        },
+        body: query,
+      }
+    )
       .then((res) => res.json())
       .then((response) => {
         return response.data.products.edges;
       });
-
-    console.log(response);
     const productData = response.map((prod) => prod.node);
     const collection = actions.addCollection({
       typeName: "Product",

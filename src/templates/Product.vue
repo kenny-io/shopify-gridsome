@@ -21,7 +21,7 @@
                 />
                 <label :for="`${variant.node.id}`">
                   {{ variant.node.title }} -
-                  {{ price(variant.node.priceV2) }}
+                  {{ price(variant.node.price) }}
                   ( Only {{ variant.node.quantityAvailable }} left )
                 </label>
               </div>
@@ -31,7 +31,7 @@
 
           <div v-else>
             <p>
-              {{ price(product.variants[0].node.priceV2) }}
+              {{ price(product.variants[0].node.price) }}
               <span v-if="product.variants[0].node.quantityAvailable > 10">
                 (10+ left)
               </span>
@@ -75,10 +75,7 @@ query Products($id: ID!) {
         id
         title
         quantityAvailable
-        priceV2{
-          amount
-          currencyCode
-        }
+        price
       }
     },
     priceRange{
@@ -138,8 +135,8 @@ export default {
       window.location.reload(true);
     },
     price(itemPrice) {
-      const amount = Number(itemPrice.amount).toFixed(2);
-      return amount + " " + itemPrice.currencyCode;
+      const amount = Number(itemPrice).toFixed(2);
+      return amount + " " + "USD";
     },
   },
 };
