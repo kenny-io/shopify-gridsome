@@ -53,18 +53,15 @@ module.exports = function(api) {
       }
     }`;
 
-    const response = await fetch(
-      process.env.SHOPIFY_STORE_URL + `/api/graphql`,
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "application/graphql",
-          "X-Shopify-Storefront-Access-Token":
-            process.env.SHOPIFY_STOREFRONT_API_TOKEN,
-        },
-        body: query,
-      }
-    )
+    const response = await fetch(process.env.SHOPIFY_API_ENDPOINT, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/graphql",
+        "X-Shopify-Storefront-Access-Token":
+          process.env.SHOPIFY_STOREFRONT_API_TOKEN,
+      },
+      body: query,
+    })
       .then((res) => res.json())
       .then((response) => {
         return response.data.products.edges;
