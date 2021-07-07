@@ -6,8 +6,6 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 const fetch = require("node-fetch");
-// const shopUrl = "https://netlify-demo.myshopify.com";
-// const storefront_access_token = "b98313b8d60c1d61649070cc78cc41da";
 
 module.exports = function(api) {
   api.loadSource(async (actions) => {
