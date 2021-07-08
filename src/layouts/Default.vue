@@ -1,17 +1,8 @@
 <template>
-  <div class="layout">
-    <header class="header">
-      <strong>
-        <g-link to="/">{{ $static.metadata.siteName }}</g-link>
-      </strong>
-      <nav class="nav">
-        <g-link class="nav__link" to="/">Home</g-link>
-        <g-link class="nav__link" to="/cart/">
-          Shopping Cart ({{ this.count || 0 }})
-        </g-link>
-      </nav>
-    </header>
+  <div>
+    <Header />
     <slot />
+    <Footer />
   </div>
 </template>
 
@@ -24,28 +15,13 @@ query {
 </static-query>
 
 <script>
+import Header from "../components/Header.vue";
+import Footer from "../components/Footer.vue";
+
 export default {
-  data() {
-    return {
-      count: "",
-    };
-  },
-  mounted() {
-    this.cart = JSON.parse(localStorage.getItem("cart"));
-    this.count = this.cart.lines.edges.length;
+  components: {
+    Footer,
+    Header,
   },
 };
 </script>
-<style>
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  height: 80px;
-}
-
-.nav__link {
-  margin-left: 20px;
-}
-</style>

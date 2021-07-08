@@ -1,7 +1,9 @@
 <template>
   <Layout>
     <template>
-      <Products />
+      <main>
+        <Products />
+      </main>
     </template>
   </Layout>
 </template>
@@ -16,6 +18,7 @@ query{
         description,
         handle,
         images,
+        productType
         priceRange{
           maxVariantPrice{
             amount
