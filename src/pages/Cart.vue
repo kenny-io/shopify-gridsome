@@ -1,9 +1,24 @@
 <template>
   <Layout>
     <template>
-      <h1>Your Cart</h1>
-      <main>
-        <div v-if="cartItems.length > 0">
+      <main class="cart-page">
+        <article class="cart-page-content">
+          <h1>Your Cart</h1>
+          <div v-if="cartItems.length > 0">
+            <CartTable />
+            <CartTotal />
+          </div>
+          <section v-else>
+            <p class="cart-page-message">Your cart is empty, fill it up!</p>
+            <g-link to="/" class="cart-page-button is-dark">
+              Back to Products
+            </g-link>
+          </section>
+        </article>
+      </main>
+      <!-- <h1>Your Cart</h1> -->
+      <!-- <main> -->
+      <!-- <div v-if="cartItems.length > 0">
           <table>
             <thead>
               <th>Item</th>
@@ -46,16 +61,22 @@
           <p>Your cart is empty, fill it up!</p>
         </div>
         <br />
-        <g-link to="/">Back Home</g-link>
-      </main>
+        <g-link to="/">Back Home</g-link> -->
+      <!-- </main> -->
     </template>
   </Layout>
 </template>
 
 <script>
+import CartTable from "../components/CartTable.vue";
+import CartTotal from "../components/CartTotal.vue";
 export default {
   metaInfo: {
     title: "Cart",
+  },
+  components: {
+    CartTable,
+    CartTotal,
   },
   data() {
     return {

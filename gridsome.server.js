@@ -18,6 +18,7 @@ module.exports = function(api) {
             description
             title
             totalInventory
+            productType
             variants(first: 5) {
               edges {
                 node {
@@ -64,6 +65,7 @@ module.exports = function(api) {
       .then((response) => {
         return response.data.products.edges;
       });
+
     const productData = response.map((prod) => prod.node);
     const collection = actions.addCollection({
       typeName: "Product",
@@ -73,6 +75,7 @@ module.exports = function(api) {
         id: product.id,
         title: product.title,
         handle: product.handle,
+        productType: product.productType,
         description: product.description,
         images: product.images.edges[0].node.src,
         altText: product.images.edges[0].node.altText,
