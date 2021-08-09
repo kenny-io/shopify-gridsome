@@ -80,7 +80,7 @@ export default {
 
       localStorage.setItem("cartId", removeItemFromCart.id);
       localStorage.setItem("cart", JSON.stringify(removeItemFromCart));
-      window.location.reload(true);
+      location.reload();
     },
   },
 };

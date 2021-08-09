@@ -29,7 +29,6 @@ export default {
   data() {
     return {
       cart: "",
-      //   cartItems: [],
       total: 0,
       subtotal: 0,
       tax: 0,
