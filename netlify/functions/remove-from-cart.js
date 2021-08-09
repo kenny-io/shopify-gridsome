@@ -14,9 +14,6 @@ exports.handler = async (event) => {
       body: JSON.stringify(shopifyResponse.cartLinesRemove.cart),
     };
   } catch (error) {
-    console.log("----------------");
-    console.log("remove-item-from-cart.js");
-    console.log("----------------");
     console.log(error);
   }
 };
